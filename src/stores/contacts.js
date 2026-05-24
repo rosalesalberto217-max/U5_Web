@@ -28,8 +28,8 @@ export const useContactsStore = defineStore('contacts', () => {
   async function fetchContacts(buscar = '') {
     loading.value = true
     try {
-      const params = buscar ? `?buscar=${encodeURIComponent(buscar)}` : ''
-      const response = await api.get(`/contactos/index.php${params}`)
+      const params = buscar ? `&buscar=${encodeURIComponent(buscar)}` : ''
+      const response = await api.get(`/contactos/index.php?t=${Date.now()}${params}`)
       if (response.data.success) {
         contacts.value = response.data.data || []
       }
@@ -45,7 +45,7 @@ export const useContactsStore = defineStore('contacts', () => {
   async function fetchContact(id) {
     loading.value = true
     try {
-      const response = await api.get(`/contactos/detalle.php?id=${id}`)
+      const response = await api.get(`/contactos/detalle.php?id=${id}&t=${Date.now()}`)
       if (response.data.success) {
         currentContact.value = response.data.data
       }
