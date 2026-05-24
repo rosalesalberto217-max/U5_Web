@@ -5,7 +5,7 @@ let cachedConfig = null
 export async function loadConfig() {
   if (cachedConfig) return cachedConfig
   try {
-    const response = await fetch('/config.json')
+    const response = await fetch(import.meta.env.BASE_URL + 'config.json')
     cachedConfig = await response.json()
     return cachedConfig
   } catch (error) {
@@ -49,8 +49,8 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('auth_token')
       localStorage.removeItem('auth_user')
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login'
+      if (!window.location.hash.includes('/login')) {
+        window.location.href = import.meta.env.BASE_URL + '#/login'
       }
     }
     return Promise.reject(error)
