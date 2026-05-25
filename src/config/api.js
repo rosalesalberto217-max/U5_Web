@@ -5,7 +5,7 @@ let cachedConfig = null
 export async function loadConfig() {
   if (cachedConfig) return cachedConfig
   try {
-    const response = await fetch(import.meta.env.BASE_URL + 'config.json')
+    const response = await fetch(import.meta.env.BASE_URL + 'config.json?t=' + Date.now())
     cachedConfig = await response.json()
     return cachedConfig
   } catch (error) {
